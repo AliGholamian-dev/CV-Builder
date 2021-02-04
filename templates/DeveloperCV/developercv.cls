@@ -15,6 +15,14 @@
 % The MIT License (see included LICENSE file)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{fontawesome}
+\RequirePackage{tikz}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{moresize}
+\RequirePackage{geometry} 
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{longtable}
 
 %----------------------------------------------------------------------------------------
 %	CLASS CONFIGURATION
