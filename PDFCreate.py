@@ -29,6 +29,6 @@ class CreatePDF:
         )
 
 
-a = CreatePDF({"Template": "AliceCV"})
+a = CreatePDF({"Template": "DeveloperCV"})
 
 a.makeCV()
