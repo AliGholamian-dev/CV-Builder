@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.2.5)  5 FEB 2021 18:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.2.5)  5 FEB 2021 21:00
 entering extended mode
 **./templates/DeveloperCV/template_new.tex
 (templates/DeveloperCV/template_new.tex
@@ -1021,6 +1021,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 51--54
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 60--62
+[]$
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--62
 
  []
 
@@ -1066,12 +1071,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--140
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 151--152
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 166--167
+Underfull \hbox (badness 10000) in paragraph at lines 155--155
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--174
 
  []
 
@@ -1082,10 +1097,10 @@ Package rerunfilecheck Info: File `Ali.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 20474 strings out of 479618
- 407550 string characters out of 2864552
- 706173 words of memory out of 3000000
- 37248 multiletter control sequences out of 15000+200000
+ 20479 strings out of 479618
+ 407626 string characters out of 2864552
+ 707199 words of memory out of 3000000
+ 37252 multiletter control sequences out of 15000+200000
  515510 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,8n,130p,455b,687s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1095,9 +1110,9 @@ ontawesometwo.enc}{D:/AP/CV-Builder/templates/DeveloperCV/a_bzmckq.enc}<C:/User
 s/TANDIS/AppData/Roaming/MiKTeX/fonts/type1/public/fontawesome/FontAwesome.pfb>
 <D:/AP/CV-Builder/templates/DeveloperCV/Raleway-Bold.pfb><D:/AP/CV-Builder/temp
 lates/DeveloperCV/Raleway-Regular.pfb>
-Output written on D:\AP\CV-Builder\Output\Ali.pdf (1 page, 60926 bytes).
+Output written on D:\AP\CV-Builder\Output\Ali.pdf (1 page, 61967 bytes).
 PDF statistics:
- 37 PDF objects out of 1000 (max. 8388607)
- 5 named destinations out of 1000 (max. 500000)
+ 40 PDF objects out of 1000 (max. 8388607)
+ 6 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
