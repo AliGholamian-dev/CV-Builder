@@ -20,15 +20,15 @@ class CreatePDF:
         self.dictOfInformation = dictOfInformation
 
     def makeCV(self):
-        asyncio.run(run("initexmf --mkmaps"))
-        asyncio.run(run("initexmf --update-fndb"))
+        asyncio.run(run("initexmf --enable-installer --mkmaps"))
+        asyncio.run(run("initexmf --enable-installer --update-fndb"))
         asyncio.run(
             run(
-                f"pdflatex -interaction=nonstopmode -aux-directory=./templates/Tempfiles -include-directory=./templates/{self.dictOfInformation['Template']} -job-name=Resume.pdf -output-directory=./Output ./templates/{self.dictOfInformation['Template']}/template.tex"
+                f"pdflatex --enable-installer -interaction=nonstopmode -aux-directory=./templates/Tempfiles -include-directory=./templates/{self.dictOfInformation['Template']} -job-name={self.dictOfInformation['nameOfFile']} -output-directory=./Output ./templates/{self.dictOfInformation['Template']}/template.tex"
             )
         )
 
 
-a = CreatePDF({"Template": "DeveloperCV"})
+a = CreatePDF({"Template": "ModernCV", "nameOfFile": "Ali"})
 
 a.makeCV()

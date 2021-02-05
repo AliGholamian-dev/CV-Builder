@@ -16,11 +16,24 @@
 \RequirePackage{ifmtarg}
 \RequirePackage{ifthen}
 \RequirePackage{pgffor}
-\RequirePackage{marvosym}
+\RequirePackage{fontawesome}
 \RequirePackage{parskip}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
+\pdfmapfile{=ClearSans.map}
+\pdfmapfile{=FontAwesome.map}
+%----------------------------------------------------------------------------------------
+%	 FONTS
+%----------------------------------------------------------------------------------------
+\usepackage{fontawesome} % Required for FontAwesome icons
+
+% Command to output an icon in a black square box with text to the right
+\newcommand{\icon}[3]{% The first parameter is the FontAwesome icon name, the second is the box size and the third is the text
+	\vcenteredhbox{\colorbox{black}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}% Icon and box
+	\hspace{0.2cm}% Whitespace
+	\vcenteredhbox{\textcolor{black}{#3}}% Text
+}
 
 %----------------------------------------------------------------------------------------
 %	 COLOURS
@@ -71,6 +84,8 @@
 \newcommand{\cvnumberphone}[1]{\renewcommand{\cvnumberphone}{#1}}
 \newcommand{\cvaddress}[1]{\renewcommand{\cvaddress}{#1}}
 \newcommand{\cvsite}[1]{\renewcommand{\cvsite}{#1}}
+\newcommand{\cvgit}[1]{\renewcommand{\cvgit}{#1}}
+\newcommand{\cvlinkedin}[1]{\renewcommand{\cvlinkedin}{#1}}
 \newcommand{\aboutme}[1]{\renewcommand{\aboutme}{#1}}
 \newcommand{\profilepic}[1]{\renewcommand{\profilepic}{#1}}
 \newcommand{\cvname}[1]{\renewcommand{\cvname}{#1}}
@@ -139,11 +154,11 @@
 
 		\renewcommand{\arraystretch}{1.6}
 		\begin{tabular}{p{0.5cm} @{\hskip 0.5cm}p{5cm}}
-			\ifthenelse{\equal{\cvdate}{}}{}{\textsc{\Large\icon{\Info}} & \cvdate\\}
-			\ifthenelse{\equal{\cvaddress}{}}{}{\textsc{\Large\icon{\Letter}} & \cvaddress\\}
-			\ifthenelse{\equal{\cvnumberphone}{}}{}{\textsc{\Large\icon{\Telefon}} & \cvnumberphone\\}
-			\ifthenelse{\equal{\cvsite}{}}{}{\textsc{\Large\icon{\Mundus}} & \cvsite\\}
-			\ifthenelse{\equal{\cvmail}{}}{}{\textsc{\large\icon{@}} & \href{mailto:\cvmail}{\cvmail}}
+			\ifthenelse{\equal{\cvnumberphone}{}}{}{\textsc{\large\icon{Phone}{10}} & \cvnumberphone\\}
+			\ifthenelse{\equal{\cvgit}{}}{}{\textsc{\large\icon{Github}{10}} & \cvgit\\}
+			\ifthenelse{\equal{\cvlinkedin}{}}{}{\textsc{\large\icon{Linkedin}{10}} & \cvlinkedin\\}
+			\ifthenelse{\equal{\cvsite}{}}{}{\textsc{\large\icon{Globe}{10}} & \cvsite\\}
+			\ifthenelse{\equal{\cvmail}{}}{}{\textsc{\large\icon{At}{10}} & \href{mailto:\cvmail}{\cvmail}}
 		\end{tabular}
 
 		%------------------------------------------------

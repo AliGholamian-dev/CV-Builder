@@ -23,7 +23,7 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{longtable}
-
+\RequirePackage[default]{raleway}
 %----------------------------------------------------------------------------------------
 %	CLASS CONFIGURATION
 %----------------------------------------------------------------------------------------
@@ -36,6 +36,8 @@
 
 \LoadClass{extarticle} % Load the base class
 
+\pdfmapfile{=Raleway.map}
+\pdfmapfile{=FontAwesome.map}
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
