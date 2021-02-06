@@ -263,7 +263,7 @@ class CreatePDF:
 
 
 _dict = {
-    "Template": "DeveloperCV",
+    "Template": "AliceCV",
     "nameOfFile": "Ali",
     "Picture": "ali.jpeg",
     "Name": "Ali",
