@@ -38,3 +38,4 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
     def __init__(self):
         super(InfoWindow, self).__init__()
         self.setupUi(self)
+        print(_dict["Template"])
