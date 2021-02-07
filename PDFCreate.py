@@ -264,7 +264,7 @@ class CreatePDF:
 
 _dict = {
     "Template": "AliceCV",
-    "nameOfFile": "Ali",
+    "nameOfFile": "Resume",
     "Picture": "ali.jpeg",
     "Name": "Ali",
     "LastName": "Gholamian",

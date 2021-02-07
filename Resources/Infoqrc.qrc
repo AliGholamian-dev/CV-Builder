@@ -1,0 +1,17 @@
+<RCC>
+  <qresource>
+    <file>icons/gitrepo.png</file>
+    <file>icons/fetch.png</file>
+    <file>icons/remove.png</file>
+    <file>icons/Add.png</file>
+    <file>icons/Job.png</file>
+    <file>icons/Address.png</file>
+    <file>icons/Website.png</file>
+    <file>icons/LinkedIn.png</file>
+    <file>icons/birth-date.png</file>
+    <file>icons/Name.png</file>
+    <file>icons/email.png</file>
+    <file>icons/github.png</file>
+    <file>icons/phone.png</file>
+  </qresource>
+</RCC>
