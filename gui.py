@@ -25,7 +25,7 @@ class MainGui(QMainWindow, Form):
         self.info_w = None
 
     def alice_selected(self, event):
-        if not find_executable("latex"):
+        if not find_executable("pdflatex"):
             self.error_dialog.setText("Make Sure LATEX is installed")
             self.error_dialog.show()
             return
@@ -37,7 +37,7 @@ class MainGui(QMainWindow, Form):
         self.close()
 
     def developer_selected(self, event):
-        if not find_executable("latex"):
+        if not find_executable("pdflatex"):
             self.error_dialog.setText("Make Sure LATEX is installed")
             self.error_dialog.show()
             return
@@ -49,7 +49,7 @@ class MainGui(QMainWindow, Form):
         self.close()
 
     def modern_selected(self, event):
-        if not find_executable("latex"):
+        if not find_executable("pdflatex"):
             self.error_dialog.setText("Make Sure LATEX is installed")
             self.error_dialog.show()
             return

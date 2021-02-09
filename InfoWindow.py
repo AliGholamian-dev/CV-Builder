@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPixmap
 import aiohttp
 import asyncio
+from PDFCreate import CreatePDF
 
 Form_InfoWindow = uic.loadUiType(os.path.join(os.getcwd(), "Resources/InfoWindow.ui"))[
     0
@@ -20,7 +21,7 @@ Form_InfoWindow = uic.loadUiType(os.path.join(os.getcwd(), "Resources/InfoWindow
 
 _dict = {
     "Template": "",
-    "nameOfFile": "",
+    "nameOfFile": "Resume",
     "Picture": "",
     "Name": "",
     "LastName": "",
@@ -41,7 +42,7 @@ _dict = {
     "Education": [],
     "Awards": [],
     "Experience": [],
-    "Info": "Nothin yet",
+    "Info": "",
 }
 
 
@@ -66,7 +67,12 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
         self.addSkill.clicked.connect(self.addSkillFucntion)
         self.removeSkill.clicked.connect(self.removeSkillFucntion)
 
+        self.addEd.clicked.connect(self.addEdFucntion)
+        self.removeEd.clicked.connect(self.removeEdFucntion)
+
         self.fetchRepo.clicked.connect(self.goGetRepos)
+
+        self.actionGenerate_PDF.triggered.connect(self.generateFunction)
 
     async def fetchRepository(self):
         try:
@@ -160,11 +166,14 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
         self.awards.addItem(
             f"Year {self.Date.date().year()} / {self.awardInput.text()}"
         )
+        _dict["Awards"].append([f"{self.Date.date().year()}", self.awardInput.text()])
         self.awardInput.clear()
 
     def removeAwardFucntion(self):
         for SelectedItem in self.awards.selectedItems():
-            self.awards.takeItem(self.awards.row(SelectedItem))
+            temp_index = self.awards.row(SelectedItem)
+            _dict["Awards"].pop(temp_index)
+            self.awards.takeItem(temp_index)
         self.awardInput.clear()
 
     def addExpFucntion(self):
@@ -178,7 +187,15 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
             return
 
         self.expList.addItem(
-            f"{self.expDateFrom.date().year()} -- {self.expDateTo.date().year()} -> {self.exptitle.text()} @ {self.workplace.text()}"
+            f"{self.expDate.date().year()} -> {self.exptitle.text()} @ {self.workplace.text()}"
+        )
+        _dict["Experience"].append(
+            [
+                f"{self.expDate.date().year()}",
+                self.exptitle.text(),
+                self.workplace.text(),
+                self.expdesc.text(),
+            ]
         )
         self.exptitle.clear()
         self.workplace.clear()
@@ -186,7 +203,9 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
 
     def removeExpFucntion(self):
         for SelectedItem in self.expList.selectedItems():
-            self.expList.takeItem(self.expList.row(SelectedItem))
+            temp_index = self.expList.row(SelectedItem)
+            _dict["Experience"].pop(temp_index)
+            self.expList.takeItem(temp_index)
         self.exptitle.clear()
         self.workplace.clear()
         self.expdesc.clear()
@@ -199,10 +218,97 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
         self.skillList.addItem(
             f"{self.Skill.text()} -> {self.skillSpinBox.value()} / 100"
         )
+        if _dict["Template"] == "AliceCV":
+            _dict["Skills"].append(
+                [self.Skill.text(), self.skillSpinBox.value() / 100 * 6]
+            )
+        else:
+            _dict["Skills"].append([self.Skill.text(), self.skillSpinBox.value()])
         self.Skill.clear()
 
     def removeSkillFucntion(self):
         for SelectedItem in self.skillList.selectedItems():
-            self.skillList.takeItem(self.skillList.row(SelectedItem))
+            temp_index = self.skillList.row(SelectedItem)
+            _dict["Skills"].pop(temp_index)
+            self.skillList.takeItem(temp_index)
         self.Skill.clear()
+
+    def addEdFucntion(self):
+        if (
+            self.edTitle.text() == ""
+            or self.University.text() == ""
+            or self.edDesc.text() == ""
+        ):
+            self.error_dialog.setText("Fill All Fields Please !!!!")
+            self.error_dialog.show()
+            return
+        self.edList.addItem(
+            f"{self.edDatefrom.date().year()} -- {self.edDateTo.date().year()} /-> {self.edTitle.text()} @ {self.University.text()}"
+        )
+        _dict["Education"].append(
+            [
+                f"{self.edDatefrom.date().year()}",
+                f"{self.edDateTo.date().year()}",
+                self.edTitle.text(),
+                self.University.text(),
+                self.edDesc.text(),
+            ]
+        )
+        self.edTitle.clear()
+        self.University.clear()
+        self.edDesc.clear()
+
+    def removeEdFucntion(self):
+        for SelectedItem in self.edList.selectedItems():
+            temp_index = self.edList.row(SelectedItem)
+            _dict["Education"].pop(temp_index)
+            self.edList.takeItem(temp_index)
+        self.edTitle.clear()
+        self.University.clear()
+        self.edDesc.clear()
+
+    def generateFunction(self):
+        try:
+            # see if we can resolve the host name -- tells us if there is
+            # a DNS listening
+            host = socket.gethostbyname("one.one.one.one")
+            # connect to the host -- tells us if the host is actually
+            # reachable
+            s = socket.create_connection((host, 80), 2)
+            s.close()
+        except:
+            self.error_dialog.setText("Check your Internet Connection")
+            self.error_dialog.show()
+            self.fetchRepo.setEnabled(True)
+            return
+        if _dict["Picture"] == "":
+            _dict["Picture"] = "picture/default_profile.png"
+        _dict["Name"] = self.Name.text()
+        _dict["LastName"] = self.LastName.text()
+        _dict["Title"] = self.jobTitle.text()
+        _dict["Address"] = self.Address.text()
+        _dict["Phone"] = self.Phone.text()
+        _dict["Mail"] = self.Email.text()
+        _dict["Git"] = self.GitHub.text()
+        _dict["Linkedin"] = self.LinkedIn.text()
+        _dict["Site"] = self.Site.text()
+        _dict["Aboutme"] = self.Aboutme.toPlainText()
+        if _dict["Template"] == "ModernCV":
+            _dict["Interests"] = []
+            for i in range(self.Interests.count()):
+                _dict["Interests"].append(self.Interests.item(i).text())
+        elif _dict["Template"] == "DeveloperCV":
+            if self.Interests.count() > 0:
+                _dict["Interests"] = f"{self.Interests.item(0).text()}"
+                for i in range(1, self.Interests.count()):
+                    _dict["Interests"] += f", {self.Interests.item(i).text()}"
+        else:
+            if self.Interests.count() > 0:
+                _dict["Interests"] = f"{self.Interests.item(0).text()}"
+                for i in range(1, self.Interests.count()):
+                    _dict["Interests"] += f"\n{self.Interests.item(i).text()}"
+
+        your_resume = CreatePDF(_dict)
+        your_resume.update_template_context()
+        your_resume.makeCV()
 

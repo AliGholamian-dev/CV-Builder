@@ -155,9 +155,9 @@
 		\renewcommand{\arraystretch}{1.6}
 		\begin{tabular}{p{0.5cm} @{\hskip 0.5cm}p{5cm}}
 			\ifthenelse{\equal{\cvnumberphone}{}}{}{\textsc{\large\icon{Phone}{10}} & \cvnumberphone\\}
-			\ifthenelse{\equal{\cvgit}{}}{}{\textsc{\large\icon{Github}{10}} & \cvgit\\}
+			\ifthenelse{\equal{\cvgit}{}}{}{\textsc{\large\icon{Github}{10}} & \href{https://github.com/\cvgit}{\cvgit}\\}
 			\ifthenelse{\equal{\cvlinkedin}{}}{}{\textsc{\large\icon{Linkedin}{10}} & \cvlinkedin\\}
-			\ifthenelse{\equal{\cvsite}{}}{}{\textsc{\large\icon{Globe}{10}} & \cvsite\\}
+			\ifthenelse{\equal{\cvsite}{}}{}{\textsc{\large\icon{Globe}{10}} & \href{\cvsite}{\cvsite}\\}
 			\ifthenelse{\equal{\cvmail}{}}{}{\textsc{\large\icon{At}{10}} & \href{mailto:\cvmail}{\cvmail}}
 		\end{tabular}
 

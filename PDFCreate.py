@@ -31,6 +31,13 @@ class CreatePDF:
         # for each line in the input file
         temptext = str(fin.read())
         fin.close()
+        for skills_set in self.dictOfInformation["Skills"]:
+            if skills_set[1] > 66:
+                self.dictOfInformation["Advanced"].append(skills_set[0])
+            elif skills_set[1] > 33:
+                self.dictOfInformation["Intermediate"].append(skills_set[0])
+            else:
+                self.dictOfInformation["Basic"].append(skills_set[0])
         # read replace the string and write to output file
         temptext = temptext.replace("rname", self.dictOfInformation["Name"])
         temptext = temptext.replace("raddress", self.dictOfInformation["Address"])
@@ -177,18 +184,26 @@ class CreatePDF:
         elif self.dictOfInformation["Template"] == "ModernCV":
             temptext = temptext.replace("rpic", self.dictOfInformation["Picture"])
             temptext = temptext.replace("rlastname", self.dictOfInformation["LastName"])
-            txt = "\\cvitem{Basic}{" + self.dictOfInformation["Basic"][0]
-            for sk in self.dictOfInformation["Basic"][1:]:
-                txt += ", " + sk
-            txt += (
-                "}\n\\cvitem{Intermediate}{" + self.dictOfInformation["Intermediate"][0]
-            )
-            for sk in self.dictOfInformation["Intermediate"][1:]:
-                txt += ", " + sk
-            txt += "}\n\\cvitem{Advanced}{" + self.dictOfInformation["Advanced"][0]
-            for sk in self.dictOfInformation["Advanced"][1:]:
-                txt += ", " + sk
-            temptext = temptext.replace("rskills", txt + "}\n")
+            txt = ""
+            if len(self.dictOfInformation["Basic"]) > 0:
+                txt = "\\cvitem{Basic}{" + self.dictOfInformation["Basic"][0]
+                for sk in self.dictOfInformation["Basic"][1:]:
+                    txt += ", " + sk
+                txt += "}\n"
+            if len(self.dictOfInformation["Intermediate"]) > 0:
+                txt += (
+                    "\\cvitem{Intermediate}{"
+                    + self.dictOfInformation["Intermediate"][0]
+                )
+                for sk in self.dictOfInformation["Intermediate"][1:]:
+                    txt += ", " + sk
+                txt += "}\n"
+            if len(self.dictOfInformation["Advanced"]) > 0:
+                txt += "\\cvitem{Advanced}{" + self.dictOfInformation["Advanced"][0]
+                for sk in self.dictOfInformation["Advanced"][1:]:
+                    txt += ", " + sk
+                txt += "}\n"
+            temptext = temptext.replace("rskills", txt)
 
             txt = ""
             for inter in self.dictOfInformation["Interests"]:
@@ -253,57 +268,55 @@ class CreatePDF:
         fout.close()
 
     def makeCV(self):
-        asyncio.run(run("initexmf --enable-installer --mkmaps"))
-        asyncio.run(run("initexmf --enable-installer --update-fndb"))
+        # asyncio.run(run("initexmf --enable-installer --mkmaps"))
+        # asyncio.run(run("initexmf --enable-installer --update-fndb"))
         asyncio.run(
             run(
                 f"pdflatex --enable-installer -interaction=nonstopmode -aux-directory=./templates/Tempfiles -include-directory=./templates/{self.dictOfInformation['Template']} -job-name={self.dictOfInformation['nameOfFile']} -output-directory=./Output ./templates/{self.dictOfInformation['Template']}/template_new.tex"
             )
         )
+        asyncio.run(run("start ./Output/Resume.pdf"))
 
 
-_dict = {
-    "Template": "AliceCV",
-    "nameOfFile": "Resume",
-    "Picture": "ali.jpeg",
-    "Name": "Ali",
-    "LastName": "Gholamian",
-    "Title": "Developer",
-    "Address": "ksjdfdkj",
-    "Phone": "sdjhfdj",
-    "Git": "AliGholamian-dev",
-    "Linkedin": "sdjkfkjdf",
-    "Site": "sdjkfhdjkhf",
-    "Mail": "dsklfjldf",
-    "Aboutme": "sdjkfhnsjfhdshfkdjfhfhjsfjks",
-    "Skills": [["JAVA", 5.8], ["C++", 6]],
-    "Basic": ["HTML", "CSS"],
-    "Intermediate": ["HTML", "CSS"],
-    "Advanced": ["HTML", "CSS"],
-    "Interests": "dsfdjfdskjkfslkfsk",  # ["asdd", "sffs", "sdfsfss"],
-    "Gitrepos": [["C++", "Cpp-Standard-Library", "Readme.md",]],
-    "Education": [
-        ["1865", "2020", "asd", "University", "Degree"],
-        ["1865", "2020", "adsad", "University", "Degree"],
-    ],
-    "Awards": [["1865", "a"], ["1865", "b"],],
-    "Experience": [
-        [
-            "1865",
-            "Alice in Wonderland-The Circra (1900's) Silent Film.",
-            "Film",
-            "The first Alice on film was over a hundred years ago.",
-        ],
-        [
-            "1865",
-            "Alice in Wonderland-The Circra (1900's) Silent Film.",
-            "Film",
-            "The first Alice on film was over a hundred years ago.",
-        ],
-    ],
-    "Info": "Nothin yet",
-}
-a = CreatePDF(_dict)
+# _dict = {
+#     "Template": "AliceCV",
+#     "nameOfFile": "Resume",
+#     "Picture": "ali.jpeg",
+#     "Name": "Ali",
+#     "LastName": "Gholamian",
+#     "Title": "Developer",
+#     "Address": "ksjdfdkj",
+#     "Phone": "sdjhfdj",
+#     "Git": "AliGholamian-dev",
+#     "Linkedin": "sdjkfkjdf",
+#     "Site": "sdjkfhdjkhf",
+#     "Mail": "dsklfjldf",
+#     "Aboutme": "sdjkfhnsjfhdshfkdjfhfhjsfjks",
+#     "Skills": [["JAVA", 5.8], ["C++", 6]],
+#     "Basic": ["HTML", "CSS"],
+#     "Intermediate": ["HTML", "CSS"],
+#     "Advanced": ["HTML", "CSS"],
+#     "Interests": "dsfdjfdskjkfslkfsk",  # ["asdd", "sffs", "sdfsfss"],
+#     "Gitrepos": [["C++", "Cpp-Standard-Library", "Readme.md",]],
+#     "Education": [
+#         ["1865", "2020", "asd", "University", "Degree"],
+#         ["1865", "2020", "adsad", "University", "Degree"],
+#     ],
+#     "Awards": [["1865", "a"], ["1865", "b"],],
+#     "Experience": [
+#         [
+#             "1865",
+#             "Alice in Wonderland-The Circra (1900's) Silent Film.",
+#             "Film",
+#             "The first Alice on film was over a hundred years ago.",
+#         ],
+#         [
+#             "1865",
+#             "Alice in Wonderland-The Circra (1900's) Silent Film.",
+#             "Film",
+#             "The first Alice on film was over a hundred years ago.",
+#         ],
+#     ],
+#     "Info": "Nothin yet",
+# }
 
-a.update_template_context()
-a.makeCV()

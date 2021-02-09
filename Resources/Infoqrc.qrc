@@ -1,5 +1,7 @@
 <RCC>
   <qresource>
+    <file>icons/Loading.gif</file>
+    <file>icons/University.png</file>
     <file>icons/exp.png</file>
     <file>icons/gitrepo.png</file>
     <file>icons/fetch.png</file>
