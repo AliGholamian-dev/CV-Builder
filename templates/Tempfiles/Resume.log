@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.2.9)  9 FEB 2021 15:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 21.1) (preloaded format=pdflatex 2021.2.9)  9 FEB 2021 16:40
 entering extended mode
 **./templates/AliceCV/template_new.tex
 (templates/AliceCV/template_new.tex
@@ -809,17 +809,14 @@ LaTeX Font Info:    Font shape `T1/ClearSans-TLF/regular/n' will be
 
  <D:/AP/CV-Builder/templates/AliceCV/picture/default_profile.png>]
 (D:\AP\CV-Builder\templates\Tempfiles\Resume.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `Resume.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 18760 strings out of 479618
- 351598 string characters out of 2864552
- 630452 words of memory out of 3000000
- 35596 multiletter control sequences out of 15000+200000
+ 18755 strings out of 479618
+ 351570 string characters out of 2864552
+ 630405 words of memory out of 3000000
+ 35591 multiletter control sequences out of 15000+200000
  432376 words of font info for 36 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,9n,130p,736b,773s stack positions out of 5000i,500n,10000p,200000b,50000s
