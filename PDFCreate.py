@@ -1,25 +1,36 @@
 import asyncio
 
-
+# Async Function to run Commands in Shell
 async def run(cmd):
+    """ 
+    Async Function to run Commands in Shell
+  
+    Parameters: 
+        cmd (String): Command to run  
+    """
+    # Making A Subprocess to run command
     proc = await asyncio.create_subprocess_shell(
         cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-
-    stdout, stderr = await proc.communicate()
-
-    # print(f"[{cmd!r} exited with {proc.returncode}]")
-    # if stdout:
-    #     print(f"[stdout]\n{stdout.decode()}")
-    # if stderr:
-    #     print(f"[stderr]\n{stderr.decode()}")
+    # Run command
+    await proc.communicate()
 
 
+# Class for Creating Pdf
 class CreatePDF:
     def __init__(self, dictOfInformation):
+        """ 
+        Create PDf Constructor 
+  
+        Parameters: 
+            dictOfInformation (Dict): User information stored in a Dict
+        """
         self.dictOfInformation = dictOfInformation
 
     def update_template_context(self):
+        """ 
+        Updates Contebts in Template.tex file  
+        """
         # input file
         fin = open(
             f"./templates/{self.dictOfInformation['Template']}/template.tex", "rt"
@@ -31,6 +42,7 @@ class CreatePDF:
         # for each line in the input file
         temptext = str(fin.read())
         fin.close()
+        # Converting Level of Professinalty for each Template
         for skills_set in self.dictOfInformation["Skills"]:
             if skills_set[1] > 66:
                 self.dictOfInformation["Advanced"].append(skills_set[0])
@@ -38,7 +50,7 @@ class CreatePDF:
                 self.dictOfInformation["Intermediate"].append(skills_set[0])
             else:
                 self.dictOfInformation["Basic"].append(skills_set[0])
-        # read replace the string and write to output file
+        # Replacing Keywords in TEX file with User Info
         temptext = temptext.replace("rname", self.dictOfInformation["Name"])
         temptext = temptext.replace("raddress", self.dictOfInformation["Address"])
         temptext = temptext.replace("rrphone", self.dictOfInformation["Phone"])
@@ -49,16 +61,20 @@ class CreatePDF:
         temptext = temptext.replace("raboutme", self.dictOfInformation["Aboutme"])
         temptext = temptext.replace("rotherinfo", self.dictOfInformation["Info"])
         temptext = temptext.replace("rtitle", self.dictOfInformation["Title"])
-
+        # Replacing Keywords in TEX file with User Info (Keywords with specific Style)
         if self.dictOfInformation["Template"] == "AliceCV":
+            # Picture Path
             temptext = temptext.replace("rpic", self.dictOfInformation["Picture"])
+            # Replacing Skills with it's specific style
             txt = ""
             for skills_set in self.dictOfInformation["Skills"]:
                 txt += "{" + skills_set[0] + "/" + str(skills_set[1]) + "},"
             temptext = temptext.replace("rskills", txt[: len(txt) - 1])
+            # Replacing Interests with it's specific style
             temptext = temptext.replace(
                 "rinterests", self.dictOfInformation["Interests"]
             )
+            # Replacing Education with it's specific style
             txt = ""
             for ed_set in self.dictOfInformation["Education"]:
                 txt += (
@@ -75,13 +91,14 @@ class CreatePDF:
                     + "}\n\t"
                 )
             temptext = temptext.replace("reducation", txt[: len(txt) - 2])
+            # Replacing Awards with it's specific style
             txt = ""
             for award_set in self.dictOfInformation["Awards"]:
                 txt += (
                     "\\twentyitemshort{" + award_set[0] + "}{" + award_set[1] + "}\n\t"
                 )
             temptext = temptext.replace("rawards", txt[: len(txt) - 2])
-
+            # Replacing Experience with it's specific style
             txt = ""
             for ex_set in self.dictOfInformation["Experience"]:
                 txt += (
@@ -96,10 +113,11 @@ class CreatePDF:
                     + "}\n\t"
                 )
             temptext = temptext.replace("rexperience", txt[: len(txt) - 2])
-
+            # Replacing Gitrepos with it's specific style
             txt = ""
             txt_readme = ""
             for git_set in self.dictOfInformation["Gitrepos"]:
+                # In case Readme file not added to CV
                 if git_set[3] == False:
                     txt += (
                         "\\twentyitem{"
@@ -114,7 +132,7 @@ class CreatePDF:
                         + git_set[2]
                         + "}{ReadMe File}}{}\n\t"
                     )
-                else:
+                else:  # In case Readme file added to CV
                     txt_readme += (
                         "\\newpage\n\\makeprofile\n\\section{Github Repos}\n\n\\begin{twenty}\n\t\\twentyitem{"
                         + git_set[0]
@@ -146,15 +164,18 @@ class CreatePDF:
 
         elif self.dictOfInformation["Template"] == "DeveloperCV":
             temptext = temptext.replace("rlastname", self.dictOfInformation["LastName"])
+            # Replacing Skills with it's specific style
             txt = ""
             for skills_set in self.dictOfInformation["Skills"]:
                 txt += (
                     "\t\t\\baritem{" + skills_set[0] + "}{" + str(skills_set[1]) + "}\n"
                 )
             temptext = temptext.replace("rskills", txt[: len(txt) - 1])
+            # Replacing Interests with it's specific style
             temptext = temptext.replace(
                 "rinterests", self.dictOfInformation["Interests"]
             )
+            # Replacing Education with it's specific style
             txt = ""
             for ed_set in self.dictOfInformation["Education"]:
                 txt += (
@@ -169,6 +190,7 @@ class CreatePDF:
                     + "}\n"
                 )
             temptext = temptext.replace("reducation", txt[: len(txt) - 1])
+            # Replacing Awards with it's specific style
             txt = ""
             for award_set in self.dictOfInformation["Awards"]:
                 txt += (
@@ -179,7 +201,7 @@ class CreatePDF:
                     + "}\n\t\t{ }\n\t\t{ }\n"
                 )
             temptext = temptext.replace("rawards", txt[: len(txt) - 1])
-
+            # Replacing Experience with it's specific style
             txt = ""
             for ex_set in self.dictOfInformation["Experience"]:
                 txt += (
@@ -194,9 +216,11 @@ class CreatePDF:
                     + "}\n"
                 )
             temptext = temptext.replace("rexperience", txt[: len(txt) - 1])
+            # Replacing Gitrepos with it's specific style
             txt = ""
             txt_readme = ""
             for git_set in self.dictOfInformation["Gitrepos"]:
+                # In case Readme file not added to CV
                 if git_set[3] == False:
                     txt += (
                         "\t \\entry\n\t\t   {"
@@ -211,7 +235,7 @@ class CreatePDF:
                         + git_set[2]
                         + "}\n\t\t   {ReadMe File}}\n\t\t {}\n"
                     )
-                else:
+                else:  # In case Readme file added to CV
                     txt_readme += (
                         "\\newpage\n\\cvsect{Github Repos}\n\n\\begin{entrylist}\t \\entry\n\t\t   {"
                         + git_set[0]
@@ -245,6 +269,7 @@ class CreatePDF:
         elif self.dictOfInformation["Template"] == "ModernCV":
             temptext = temptext.replace("rpic", self.dictOfInformation["Picture"])
             temptext = temptext.replace("rlastname", self.dictOfInformation["LastName"])
+            # Replacing Skills with it's specific style
             txt = ""
             if len(self.dictOfInformation["Basic"]) > 0:
                 txt = "\\cvitem{Basic}{" + self.dictOfInformation["Basic"][0]
@@ -265,11 +290,12 @@ class CreatePDF:
                     txt += ", " + sk
                 txt += "}\n"
             temptext = temptext.replace("rskills", txt)
-
+            # Replacing Interests with it's specific style
             txt = ""
             for inter in self.dictOfInformation["Interests"]:
                 txt += "\\cvlistitem{" + inter + "}\n"
             temptext = temptext.replace("rinterests", txt[: len(txt) - 1])
+            # Replacing Education with it's specific style
             txt = ""
             for ed_set in self.dictOfInformation["Education"]:
                 txt += (
@@ -286,11 +312,12 @@ class CreatePDF:
                     + "}{}{}\n"
                 )
             temptext = temptext.replace("reducation", txt[: len(txt) - 1])
+            # Replacing Awards with it's specific style
             txt = ""
             for award_set in self.dictOfInformation["Awards"]:
                 txt += "\\cvitem{" + award_set[0] + "}{" + award_set[1] + "}\n"
             temptext = temptext.replace("rawards", txt[: len(txt) - 1])
-
+            # Replacing Experience with it's specific style
             txt = ""
             for ex_set in self.dictOfInformation["Experience"]:
                 txt += (
@@ -305,10 +332,11 @@ class CreatePDF:
                     + "}{}{}\n"
                 )
             temptext = temptext.replace("rexperience", txt[: len(txt) - 1])
-
+            # Replacing Gitrepos with it's specific style
             txt = ""
             txt_readme = ""
             for git_set in self.dictOfInformation["Gitrepos"]:
+                # In case Readme file not added to CV
                 if git_set[3] == False:
                     txt += (
                         "\\cventry{"
@@ -323,7 +351,7 @@ class CreatePDF:
                         + git_set[2]
                         + "}{ReadMe File}}{}{}{}\n"
                     )
-                else:
+                else:  # In case Readme file added to CV
                     txt_readme += (
                         "\\newpage\n\\makecvtitle\n\\section{Github Repo}\n\n\\cventry{"
                         + git_set[0]
@@ -355,59 +383,20 @@ class CreatePDF:
 
         fout.write(temptext)
         # close input and output files
-
         fout.close()
 
     def makeCV(self):
-        # asyncio.run(run("initexmf --enable-installer --mkmaps"))
-        # asyncio.run(run("initexmf --enable-installer --update-fndb"))
+        """ 
+        Creates PDF Resume 
+        """
+        # Making Font Map for LATEX
+        asyncio.run(run("initexmf --enable-installer --mkmaps"))
+        asyncio.run(run("initexmf --enable-installer --update-fndb"))
+        # Running pdflatex to create pdf
         asyncio.run(
             run(
                 f"pdflatex --enable-installer --shell-escape -enable-write18 -interaction=nonstopmode -aux-directory=./templates/Tempfiles -include-directory=./templates/{self.dictOfInformation['Template']} -job-name={self.dictOfInformation['nameOfFile']} -output-directory=./Output ./templates/{self.dictOfInformation['Template']}/template_new.tex"
             )
         )
+        # Openning PDF RESUME
         asyncio.run(run("start ./Output/Resume.pdf"))
-
-
-# _dict = {
-#     "Template": "AliceCV",
-#     "nameOfFile": "Resume",
-#     "Picture": "ali.jpeg",
-#     "Name": "Ali",
-#     "LastName": "Gholamian",
-#     "Title": "Developer",
-#     "Address": "ksjdfdkj",
-#     "Phone": "sdjhfdj",
-#     "Git": "AliGholamian-dev",
-#     "Linkedin": "sdjkfkjdf",
-#     "Site": "sdjkfhdjkhf",
-#     "Mail": "dsklfjldf",
-#     "Aboutme": "sdjkfhnsjfhdshfkdjfhfhjsfjks",
-#     "Skills": [["JAVA", 5.8], ["C++", 6]],
-#     "Basic": ["HTML", "CSS"],
-#     "Intermediate": ["HTML", "CSS"],
-#     "Advanced": ["HTML", "CSS"],
-#     "Interests": "dsfdjfdskjkfslkfsk",  # ["asdd", "sffs", "sdfsfss"],
-#     "Gitrepos": [["C++", "Cpp-Standard-Library", "Readme.md",]],
-#     "Education": [
-#         ["1865", "2020", "asd", "University", "Degree"],
-#         ["1865", "2020", "adsad", "University", "Degree"],
-#     ],
-#     "Awards": [["1865", "a"], ["1865", "b"],],
-#     "Experience": [
-#         [
-#             "1865",
-#             "Alice in Wonderland-The Circra (1900's) Silent Film.",
-#             "Film",
-#             "The first Alice on film was over a hundred years ago.",
-#         ],
-#         [
-#             "1865",
-#             "Alice in Wonderland-The Circra (1900's) Silent Film.",
-#             "Film",
-#             "The first Alice on film was over a hundred years ago.",
-#         ],
-#     ],
-#     "Info": "Nothin yet",
-# }
-
