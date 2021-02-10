@@ -58,7 +58,7 @@
 	% The first parameter is the FontAwesome icon name, the second is the box size and the third is the text
 	% Other icons can be found by referring to fontawesome.pdf (supplied with the template) and using the word after \fa in the command for the icon you want
 	\icon{Globe}{12}{\href{https://}{}}\\
-	\icon{Github}{12}{\href{https://github.com/}{}}\\
+	\icon{Github}{12}{\href{https://github.com/AliGholamian-Dev}{AliGholamian-Dev}}\\
 \end{minipage}
 
 \vspace{0.5cm}
@@ -119,8 +119,86 @@
 \cvsect{Github Repos}
 
 \begin{entrylist}
-
+	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/APDS9960-Sensor-STM32}{APDS9960-Sensor-STM32}}
+		   {\href{https://github.com/AliGholamian-Dev/APDS9960-Sensor-STM32/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
+	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/Artificial-Neural-Network}{Artificial-Neural-Network}}
+		   {\href{https://github.com/AliGholamian-Dev/Artificial-Neural-Network/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
+	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/AT-Command-Parser-STM32}{AT-Command-Parser-STM32}}
+		   {\href{https://github.com/AliGholamian-Dev/AT-Command-Parser-STM32/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
+	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/BST}{BST}}
+		   {\href{https://github.com/AliGholamian-Dev/BST/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
 \end{entrylist}
+
+\newpage
+\cvsect{Github Repos}
+
+\begin{entrylist}	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/8-Puzzle}{8-Puzzle}}
+		   {\href{https://github.com/AliGholamian-Dev/8-Puzzle/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
+\end{entrylist}
+\newenvironment{markdown}%
+		{\VerbatimEnvironment\begin{VerbatimOut}{https://raw.githubusercontent.com/AliGholamian-Dev/8-Puzzle/master/readme.md}}%
+		{\end{VerbatimOut}%
+			\immediate\write18{pandoc https://raw.githubusercontent.com/AliGholamian-Dev/8-Puzzle/master/readme.md -t latex -o tmp.tex}%
+			\input{tmp.tex}}
+				\begin{markdown}
+			\input{tmp.tex}
+				\end{markdown}
+\newpage
+\cvsect{Github Repos}
+
+\begin{entrylist}	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/AP_Midterm_Project}{AP_Midterm_Project}}
+		   {\href{https://github.com/AliGholamian-Dev/AP_Midterm_Project/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
+\end{entrylist}
+\newenvironment{markdown}%
+		{\VerbatimEnvironment\begin{VerbatimOut}{https://raw.githubusercontent.com/AliGholamian-Dev/AP_Midterm_Project/master/readme.md}}%
+		{\end{VerbatimOut}%
+			\immediate\write18{pandoc https://raw.githubusercontent.com/AliGholamian-Dev/AP_Midterm_Project/master/readme.md -t latex -o tmp.tex}%
+			\input{tmp.tex}}
+				\begin{markdown}
+			\input{tmp.tex}
+				\end{markdown}
+\newpage
+\cvsect{Github Repos}
+
+\begin{entrylist}	 \entry
+		   {Public}
+		   {\href{https://github.com/AliGholamian-Dev/Cpp-Standard-Library}{Cpp-Standard-Library}}
+		   {\href{https://github.com/AliGholamian-Dev/Cpp-Standard-Library/blob/master/readme.md}
+		   {ReadMe File}}
+		 {}
+\end{entrylist}
+\newenvironment{markdown}%
+		{\VerbatimEnvironment\begin{VerbatimOut}{https://raw.githubusercontent.com/AliGholamian-Dev/Cpp-Standard-Library/master/readme.md}}%
+		{\end{VerbatimOut}%
+			\immediate\write18{pandoc https://raw.githubusercontent.com/AliGholamian-Dev/Cpp-Standard-Library/master/readme.md -t latex -o tmp.tex}%
+			\input{tmp.tex}}
+				\begin{markdown}
+			\input{tmp.tex}
+				\end{markdown}
 
 %----------------------------------------------------------------------------------------
 %	ADDITIONAL INFORMATION

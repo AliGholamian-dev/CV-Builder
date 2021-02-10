@@ -177,7 +177,8 @@
 
 % compatibility package with older versions of moderncv
 \RequirePackageWithOptions{moderncvcompatibility}
-
+\RequirePackage{markdown}
+\RequirePackage{fancyvrb}
 %-------------------------------------------------------------------------------
 %                class definition
 %-------------------------------------------------------------------------------

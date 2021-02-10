@@ -24,6 +24,8 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{longtable}
 \RequirePackage[default]{raleway}
+\RequirePackage{markdown}
+\RequirePackage{fancyvrb}
 %----------------------------------------------------------------------------------------
 %	CLASS CONFIGURATION
 %----------------------------------------------------------------------------------------

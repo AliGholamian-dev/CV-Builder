@@ -25,8 +25,8 @@ class MainGui(QMainWindow, Form):
         self.info_w = None
 
     def alice_selected(self, event):
-        if not find_executable("pdflatex"):
-            self.error_dialog.setText("Make Sure LATEX is installed")
+        if not find_executable("pdflatex") or not find_executable("pandoc"):
+            self.error_dialog.setText("Make Sure LATEX and PanDoc are installed")
             self.error_dialog.show()
             return
         elif self.info_w and self.info_w.isVisible():
@@ -37,8 +37,8 @@ class MainGui(QMainWindow, Form):
         self.close()
 
     def developer_selected(self, event):
-        if not find_executable("pdflatex"):
-            self.error_dialog.setText("Make Sure LATEX is installed")
+        if not find_executable("pdflatex") or not find_executable("pandoc"):
+            self.error_dialog.setText("Make Sure LATEX and PanDoc are installed")
             self.error_dialog.show()
             return
         elif self.info_w and self.info_w.isVisible():
@@ -49,8 +49,8 @@ class MainGui(QMainWindow, Form):
         self.close()
 
     def modern_selected(self, event):
-        if not find_executable("pdflatex"):
-            self.error_dialog.setText("Make Sure LATEX is installed")
+        if not find_executable("pdflatex") or not find_executable("pandoc"):
+            self.error_dialog.setText("Make Sure LATEX and PanDoc are installed")
             self.error_dialog.show()
             return
         elif self.info_w and self.info_w.isVisible():

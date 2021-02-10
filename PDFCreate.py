@@ -8,11 +8,11 @@ async def run(cmd):
 
     stdout, stderr = await proc.communicate()
 
-    print(f"[{cmd!r} exited with {proc.returncode}]")
-    if stdout:
-        print(f"[stdout]\n{stdout.decode()}")
-    if stderr:
-        print(f"[stderr]\n{stderr.decode()}")
+    # print(f"[{cmd!r} exited with {proc.returncode}]")
+    # if stdout:
+    #     print(f"[stdout]\n{stdout.decode()}")
+    # if stderr:
+    #     print(f"[stderr]\n{stderr.decode()}")
 
 
 class CreatePDF:
@@ -98,21 +98,51 @@ class CreatePDF:
             temptext = temptext.replace("rexperience", txt[: len(txt) - 2])
 
             txt = ""
+            txt_readme = ""
             for git_set in self.dictOfInformation["Gitrepos"]:
-                txt += (
-                    "\\twentyitem{"
-                    + git_set[0]
-                    + "}{\href{https://github.com/"
-                    + self.dictOfInformation["Git"]
-                    + "/"
-                    + git_set[1]
-                    + "}{"
-                    + git_set[1]
-                    + "}}{\href{"
-                    + git_set[2]
-                    + "}{ReadMe File}}{}\n\t"
-                )
+                if git_set[3] == False:
+                    txt += (
+                        "\\twentyitem{"
+                        + git_set[0]
+                        + "}{\href{https://github.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "}{"
+                        + git_set[1]
+                        + "}}{\href{"
+                        + git_set[2]
+                        + "}{ReadMe File}}{}\n\t"
+                    )
+                else:
+                    txt_readme += (
+                        "\\newpage\n\\makeprofile\n\\section{Github Repos}\n\n\\begin{twenty}\n\t\\twentyitem{"
+                        + git_set[0]
+                        + "}{\href{https://github.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "}{"
+                        + git_set[1]
+                        + "}}{\href{"
+                        + git_set[2]
+                        + "}{ReadMe File}}{}\n\\end{twenty}"
+                        + "\\newenvironment{markdown}%\n\t\t"
+                        + "{\\VerbatimEnvironment\\begin{VerbatimOut}{https://raw.githubusercontent.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "/master/readme.md}}%\n\t\t{\\end{VerbatimOut}%\n\t\t\t"
+                        + "\\immediate\\write18{pandoc "
+                        + "https://raw.githubusercontent.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "/master/readme.md -t latex -o tmp.tex}%\n\t\t\t\\input{tmp.tex}}\n\t\t\t\t"
+                        + "\\begin{markdown}\n\t\t\t\\input{tmp.tex}\n\t\t\t\t\\end{markdown}\n"
+                    )
             temptext = temptext.replace("rrepos", txt[: len(txt) - 2])
+            temptext = temptext.replace("rreadmmemdgit", txt_readme)
 
         elif self.dictOfInformation["Template"] == "DeveloperCV":
             temptext = temptext.replace("rlastname", self.dictOfInformation["LastName"])
@@ -165,21 +195,52 @@ class CreatePDF:
                 )
             temptext = temptext.replace("rexperience", txt[: len(txt) - 1])
             txt = ""
+            txt_readme = ""
             for git_set in self.dictOfInformation["Gitrepos"]:
-                txt += (
-                    "\t \\entry\n\t\t   {"
-                    + git_set[0]
-                    + "}\n\t\t   {\href{https://github.com/"
-                    + self.dictOfInformation["Git"]
-                    + "/"
-                    + git_set[1]
-                    + "}{"
-                    + git_set[1]
-                    + "}}\n\t\t   {\href{"
-                    + git_set[2]
-                    + "}\n\t\t   {ReadMe File}}\n\t\t {}\n"
-                )
+                if git_set[3] == False:
+                    txt += (
+                        "\t \\entry\n\t\t   {"
+                        + git_set[0]
+                        + "}\n\t\t   {\href{https://github.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "}{"
+                        + git_set[1]
+                        + "}}\n\t\t   {\href{"
+                        + git_set[2]
+                        + "}\n\t\t   {ReadMe File}}\n\t\t {}\n"
+                    )
+                else:
+                    txt_readme += (
+                        "\\newpage\n\\cvsect{Github Repos}\n\n\\begin{entrylist}\t \\entry\n\t\t   {"
+                        + git_set[0]
+                        + "}\n\t\t   {\href{https://github.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "}{"
+                        + git_set[1]
+                        + "}}\n\t\t   {\href{"
+                        + git_set[2]
+                        + "}\n\t\t   {ReadMe File}}\n\t\t {}\n\end{entrylist}\n"
+                        + "\\newenvironment{markdown}%\n\t\t"
+                        + "{\\VerbatimEnvironment\\begin{VerbatimOut}{https://raw.githubusercontent.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "/master/readme.md}}%\n\t\t{\\end{VerbatimOut}%\n\t\t\t"
+                        + "\\immediate\\write18{pandoc "
+                        + "https://raw.githubusercontent.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "/master/readme.md -t latex -o tmp.tex}%\n\t\t\t\\input{tmp.tex}}\n\t\t\t\t"
+                        + "\\begin{markdown}\n\t\t\t\\input{tmp.tex}\n\t\t\t\t\\end{markdown}\n"
+                    )
+
             temptext = temptext.replace("rrepos", txt[: len(txt) - 1])
+            temptext = temptext.replace("rreadmmemdgit", txt_readme)
 
         elif self.dictOfInformation["Template"] == "ModernCV":
             temptext = temptext.replace("rpic", self.dictOfInformation["Picture"])
@@ -246,21 +307,51 @@ class CreatePDF:
             temptext = temptext.replace("rexperience", txt[: len(txt) - 1])
 
             txt = ""
+            txt_readme = ""
             for git_set in self.dictOfInformation["Gitrepos"]:
-                txt += (
-                    "\\cventry{"
-                    + git_set[0]
-                    + "}{\href{https://github.com/"
-                    + self.dictOfInformation["Git"]
-                    + "/"
-                    + git_set[1]
-                    + "}{"
-                    + git_set[1]
-                    + "}}{\href{"
-                    + git_set[2]
-                    + "}{ReadMe File}}{}{}{}\n"
-                )
+                if git_set[3] == False:
+                    txt += (
+                        "\\cventry{"
+                        + git_set[0]
+                        + "}{\href{https://github.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "}{"
+                        + git_set[1]
+                        + "}}{\href{"
+                        + git_set[2]
+                        + "}{ReadMe File}}{}{}{}\n"
+                    )
+                else:
+                    txt_readme += (
+                        "\\newpage\n\\makecvtitle\n\\section{Github Repo}\n\n\\cventry{"
+                        + git_set[0]
+                        + "}{\href{https://github.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "}{"
+                        + git_set[1]
+                        + "}}{\href{"
+                        + git_set[2]
+                        + "}{ReadMe File}}{}{}{}\n"
+                        + "\\newenvironment{markdown}%\n\t\t"
+                        + "{\\VerbatimEnvironment\\begin{VerbatimOut}{https://raw.githubusercontent.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "/master/readme.md}}%\n\t\t{\\end{VerbatimOut}%\n\t\t\t"
+                        + "\\immediate\\write18{pandoc "
+                        + "https://raw.githubusercontent.com/"
+                        + self.dictOfInformation["Git"]
+                        + "/"
+                        + git_set[1]
+                        + "/master/readme.md -t latex -o tmp.tex}%\n\t\t\t\\input{tmp.tex}}\n\t\t\t\t"
+                        + "\\begin{markdown}\n\t\t\t\\input{tmp.tex}\n\t\t\t\t\\end{markdown}\n"
+                    )
             temptext = temptext.replace("rrepos", txt[: len(txt) - 1])
+            temptext = temptext.replace("rreadmmemdgit", txt_readme)
 
         fout.write(temptext)
         # close input and output files
@@ -272,7 +363,7 @@ class CreatePDF:
         # asyncio.run(run("initexmf --enable-installer --update-fndb"))
         asyncio.run(
             run(
-                f"pdflatex --enable-installer -interaction=nonstopmode -aux-directory=./templates/Tempfiles -include-directory=./templates/{self.dictOfInformation['Template']} -job-name={self.dictOfInformation['nameOfFile']} -output-directory=./Output ./templates/{self.dictOfInformation['Template']}/template_new.tex"
+                f"pdflatex --enable-installer --shell-escape -enable-write18 -interaction=nonstopmode -aux-directory=./templates/Tempfiles -include-directory=./templates/{self.dictOfInformation['Template']} -job-name={self.dictOfInformation['nameOfFile']} -output-directory=./Output ./templates/{self.dictOfInformation['Template']}/template_new.tex"
             )
         )
         asyncio.run(run("start ./Output/Resume.pdf"))

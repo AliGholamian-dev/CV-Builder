@@ -73,6 +73,7 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
         self.fetchRepo.clicked.connect(self.goGetRepos)
 
         self.actionGenerate_PDF.triggered.connect(self.generateFunction)
+        self.repoResponse = None
 
     async def fetchRepository(self):
         try:
@@ -92,17 +93,21 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
             async with session.get(
                 f"https://api.github.com/users/{self.GitHub.text()}/repos"
             ) as response:
-                repoResponse = await response.json()
+                self.repoResponse = None
+                self.repoResponse = await response.json()
                 try:
-                    temp = repoResponse[0]["name"]
+                    temp = self.repoResponse[0]["name"]
                 except:
                     self.error_dialog.setText("Wrong GitHub ID")
                     self.error_dialog.show()
                     self.fetchRepo.setEnabled(True)
                     return
+
+                for _ in range(self.repoWidget.rowCount()):
+                    self.repoWidget.removeRow(0)
                 self.repoWidget.clear()
                 row = 0
-                for gitrepos_each in repoResponse:
+                for gitrepos_each in self.repoResponse:
                     self.repoWidget.insertRow(self.repoWidget.rowCount())
                     self.repoWidget.setItem(
                         row, 2, QTableWidgetItem(gitrepos_each["name"]),
@@ -307,7 +312,35 @@ class InfoWindow(QMainWindow, Form_InfoWindow):
                 _dict["Interests"] = f"{self.Interests.item(0).text()}"
                 for i in range(1, self.Interests.count()):
                     _dict["Interests"] += f"\n{self.Interests.item(i).text()}"
-
+        for i in range(self.repoWidget.rowCount()):
+            if self.repoWidget.item(i, 0).checkState() == QtCore.Qt.Checked and (
+                not self.repoWidget.item(i, 1).checkState() == QtCore.Qt.Checked
+            ):
+                _dict["Gitrepos"].append(
+                    [
+                        "Private"
+                        if self.repoResponse[i]["private"] == "false"
+                        else "Public",
+                        self.repoWidget.item(i, 2).text(),
+                        f"https://github.com/{self.GitHub.text()}/{self.repoWidget.item(i, 2).text()}/blob/master/readme.md",
+                        self.repoWidget.item(i, 1).checkState() == QtCore.Qt.Checked,
+                    ]
+                )
+        for i in range(self.repoWidget.rowCount()):
+            if (
+                self.repoWidget.item(i, 0).checkState() == QtCore.Qt.Checked
+                and self.repoWidget.item(i, 1).checkState() == QtCore.Qt.Checked
+            ):
+                _dict["Gitrepos"].append(
+                    [
+                        "Private"
+                        if self.repoResponse[i]["private"] == "false"
+                        else "Public",
+                        self.repoWidget.item(i, 2).text(),
+                        f"https://github.com/{self.GitHub.text()}/{self.repoWidget.item(i, 2).text()}/blob/master/readme.md",
+                        self.repoWidget.item(i, 1).checkState() == QtCore.Qt.Checked,
+                    ]
+                )
         your_resume = CreatePDF(_dict)
         your_resume.update_template_context()
         your_resume.makeCV()

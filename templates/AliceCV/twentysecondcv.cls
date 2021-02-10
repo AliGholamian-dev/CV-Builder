@@ -18,7 +18,8 @@
 \RequirePackage{pgffor}
 \RequirePackage{fontawesome}
 \RequirePackage{parskip}
-
+\RequirePackage{markdown}
+\RequirePackage{fancyvrb}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 \pdfmapfile{=ClearSans.map}
